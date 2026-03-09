@@ -1,10 +1,6 @@
 // import { getTodosService, createTodoService,toggleTodoByIdService,deleteTodoByIdService } from "../services/todo.service.js";
 
-import {getTodosService, 
-    createTodoService, 
-    toggleTodoByIdService, 
-    deleteTodoByIdService,
-    updateTodoByIdService} from "../services/todo.service.js";
+import {getTodosService, createTodoService, toggleTodoByIdService, deleteTodoByIdService} from "../services/todo.service.js";
 
 export async function listTodos(req, res){
     const todos = await getTodosService();
@@ -12,10 +8,10 @@ export async function listTodos(req, res){
 }
 
 
-export function createTodos(req, res){
+export async function createTodos(req, res){
     try{
         const {task} = req.body;
-        const todo = createTodoService(task);
+        const todo = await createTodoService(task);
         res.status(201).json({message:"Created", todo});
     } catch(err){
         res.status(400).json({error:err.message});
@@ -43,17 +39,4 @@ export function removeTodo(req, res){
     }
 
     res.json({message:"Deleted Successfully"})
-}
-
-export function updateTodo(req, res){
-    const id = Number(req.params.id);
-    const { task } = req.body;
-
-    const todo = updateTodoByIdService(id, task);
-
-    if (!todo){
-        return res.status(404).json({ error: "Todo not found "});
-    }
-
-    res.json({ message: "Updated successfully", todo});
 }
