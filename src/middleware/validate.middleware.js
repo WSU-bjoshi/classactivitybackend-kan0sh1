@@ -1,5 +1,5 @@
 export function validateBody(requiredFields = []){
-    return(req,res,next =>{
+    return(req,res,next) =>{
         const missing = requiredFields.filter(
             (f) => req.body?.[f] === undefined || req.body?.[f] === ""
         );
@@ -8,5 +8,5 @@ export function validateBody(requiredFields = []){
         })
     }
         next();
-        });
+        };
 }

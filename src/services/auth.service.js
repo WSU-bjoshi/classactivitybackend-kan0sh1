@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
-import { User } from "../models/user.model";
-import { signAccessToken } from "../utils/jwt.utils";
+import User  from "../models/User.js";
+import { signAccessToken } from "../Utils/jwt.js";
+import { where } from "sequelize";
 
 const SALT_ROUNDS = 10;
 
