@@ -1,17 +1,16 @@
-import { 
-    listTodos, 
-    createTodos, 
-    toggleTodo, 
-    removeTodo, 
-} from "../controllers/todo.controllers.js";
-
 import { Router } from "express";
+
+import {listTodos, createUserTodos, toggleTodo, removeTodo } from "../controllers/todo.controllers.js";
+import { validateBody } from "../middleware/validate.middleware.js";
+import { requireAuth } from "../middleware/auth.middleware.js";
+
 const router = Router();
 
-router.get('/', listTodos);
-router.post('/', createTodos);
-router.patch('/:id', toggleTodo);
-router.delete('/:id', removeTodo);
- // This now works!
+router.use(requireAuth);
+
+router.get("/", listTodos);
+router.post("/", createUserTodos);
+router.patch("/:id/toggle", toggleTodo);
+router.delete("/delete/:id", removeTodo);
 
 export default router;

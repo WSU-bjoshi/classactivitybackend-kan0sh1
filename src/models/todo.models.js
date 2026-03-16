@@ -1,11 +1,13 @@
 import pool from "../db/connection.js";
 
-async function getAllTodos(){
-    const [rows] = await pool.query("SELECT * FROM todos;")
-    console.log(rows);
-    return rows;
+import Todo from "./Todo.js"
 
-}
+// export async function getAllUserTodos(userId){
+//     // const [rows] = await pool.query("SELECT * FROM todos;")
+//     // console.log(rows);
+//     // return rows;
+//     return await Todo.findAll({ where: {userId}, order: [["id", "ASC"]]});
+// }
 
 let nextId = 3;
 
@@ -14,16 +16,28 @@ let todos =[
     {id:2, task:"Buy eggs", done: false}
 ]
 
-function createTodo(task){
+// function getAllTodos(){
+//     return todos;
+// }
+
+export async function createUserTodo(userId, task){
     //   if(!task || typeof task !=="string" || task.trim()===""){
     //     // return res.status(400).json({error:"task is required. You should provide non-empty string"});
     //     throw new error("Invalid task")
     // }
 
-    const todo ={id: nextId++, task:task.trim(), done: false};
-    todos.push(todo);
+    // const todo ={id: nextId++, task:task.trim(), done: false};
+    // todos.push(todo);
 
-    return todo;
+    // return todo;
+    // const [result] = await pool.query(
+    //     "INSERT INTO todos(task) VALUES (?)", [task]
+    // );
+    // return {id: result.insertId, task, completed:false};
+    console.log("THe user id is", userId);
+
+    return await Todo.create({user_id: userId, tasks: task});
+
 }
 
 function toggleTodoById(id){
@@ -46,8 +60,8 @@ function deleteTodoById(id){
 }
 
 export default {
-    getAllTodos, 
-    createTodo, 
+     
+     
     toggleTodoById, 
     deleteTodoById
 };
